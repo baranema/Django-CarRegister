@@ -1,0 +1,65 @@
+ 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Car Register App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+   
+  <div class="row">
+    <div class="col-md-1 col-xs-1 col-sm-1"></div>
+    <div  class="col-md-10 col-xs-10 col-sm-10"><h3 class="round3" style="text-align:center;">Cars</h3></div>
+    <div class="col-md-1 col-xs-1 col-sm-1"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-9 col-xs-9 col-sm-9"></div>
+    <div class="col-md-2 col-xs-2 col-sm-2"> 
+      <a href="{% url 'add' %}">
+        <button type="button" class="btn btn-primary btn-block">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </a>
+    </div>
+  </div>
+  <br/>
+  {% for car in cars %}
+    <div class="row"> 
+      <div class="col-md-1 col-xs-1 col-sm-1"></div> 
+      <div class="col-md-8 col-xs-8 col-sm-8">
+        <ul class="list-group">
+          <li class="list-group-item " style="display: flex; align-items: center;">
+              <div class="col-md-2 col-xs-2 col-sm-2"><h5 style="width: 100%;">Car Plate:</h5>{{ car.carPlate }}</div> 
+              <div class="col-md-2 col-xs-2 col-sm-2"><h5 style="width: 100%;">Car Model:</h5>{{ car.carModel }}</div> 
+              <div class="col-md-2 col-xs-2 col-sm-2"><h5 style="width: 100%;">Owner First Name:</h5>{{ car.ownerfName }}</div> 
+              <div class="col-md-2 col-xs-2 col-sm-2"><h5 style="width: 100%;">Owner Last Name:</h5>{{ car.ownerlName }}</div>  
+              <div style="padding: 1em;"><img style="object-fit: cover; width:200px; height:200px;" src="/media/{{ car.image }}" ></div>
+            </li> 
+        </ul>
+      </div> 
+      <div class="col-md-1">
+        <a href="{% url 'update' car.pk %}">
+          <button type="button" class="btn btn-warning btn-block">
+            <span class="glyphicon glyphicon-edit"></span>
+          </button>
+        </a>
+      </div>
+      <div class="col-md-1">
+        <a href="{% url 'remove' car.pk %}">
+          <button type="button" class="btn btn-danger btn-block">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </a>
+      </div> 
+    </div>
+  {% endfor %}
+  </div> 
+  </body>
+</html>
