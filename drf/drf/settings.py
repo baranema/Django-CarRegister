@@ -14,8 +14,7 @@ from pathlib import Path
 import os
  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -28,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [ 
@@ -38,12 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    'rest_framework',  
     'car',
-]
+] 
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
-  
+MEDIA_ROOT = ( BASE_DIR )
 MEDIA_URL = '/media/'
 
 MIDDLEWARE = [
@@ -61,7 +58,7 @@ ROOT_URLCONF = 'drf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(os.path.dirname(__file__), '..//', 'api/templates').replace('\\', '/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'drf.wsgi.application'
 
+CELERY_BROKER_URL = 'amqp://localhost' 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
