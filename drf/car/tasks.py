@@ -13,9 +13,8 @@ def get_image(carPlateNumber: str):
     images = glob.glob(f"media/{car.carModel.replace(' ', '_')}.*")
     
     # retrieve locally
-    if images: 
-        car.image = images[len(images)-1]
-        car.save()  
+    if images:   
+        Car.objects.filter(carPlateNumber=car.carPlateNumber).update(image=images[len(images)-1])
     else:   
         # retrieve using google crawler
         directory = tempfile.mkdtemp()
