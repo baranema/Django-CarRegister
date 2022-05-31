@@ -9,34 +9,26 @@ from .models import Car
 
 @shared_task
 def get_image(carPlateNumber: str):
-    car = Car.objects.get(carPlateNumber=carPlateNumber) 
-  
+    car = Car.objects.get(carPlateNumber=carPlateNumber)  
     images = glob.glob(f"media/{car.carModel.replace(' ', '_')}.*")
     
     # retrieve locally
     if images: 
-        car.image = images.pop()   
-        car.save()    
+        car.image = images[len(images)-1]
+        car.save()  
     else:   
         # retrieve using google crawler
-        directory = tempfile.mkdtemp() 
-        google_crawler = GoogleImageCrawler(
-            feeder_threads=1,
-            parser_threads=1,
-            downloader_threads=1,
-            storage={'root_dir': directory})
-
-        filters = dict(size='large', type='photo')
-        google_crawler.crawl(keyword = car.carModel, filters = filters, max_num = 1, file_idx_offset = 0)
-        
+        directory = tempfile.mkdtemp()
+        google_crawler = GoogleImageCrawler(storage={'root_dir': directory})
+ 
+        google_crawler.crawl(keyword = car.carModel, filters = dict(size='large', type='photo'), max_num = 1, file_idx_offset = 0)
         images = os.listdir(directory)
 
         if images:   
-            with open(os.path.join(directory, images.pop()) , "rb") as img: 
+            with open(os.path.join(directory, images[len(images)-1]) , "rb") as img: 
                 car.image.save(name=f"{car.carModel}.jpg", content=File(img), save=True) 
 
     return None
-
 
 def car_post_save(sender, instance, **kwargs):  
     if instance.image: 
