@@ -5,6 +5,6 @@ Story: User can register/store Lithuanian car number plates, their owner names a
 ## API endpoints
  
 * `http://localhost:8000/api` - retrieve all cars 
-* `http://localhost:8000/api/id` - GET car by id number
+* `http://localhost:8000/api/id` - GET and UPDATE car by id number
 * `http://localhost:8000/api/create` - POST new car 
 * `http://localhost:8000/api/id/delete` - DELETE car entry by id
