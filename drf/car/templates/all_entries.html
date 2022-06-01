@@ -1,0 +1,32 @@
+<html>
+    <head> 
+    </head>
+    <body>
+        <h1>Cars list</h1> 
+
+        <table>
+            <tr>
+                <th width="14%">Car Plate</th>
+                <th width="20%">Car Model</th>
+                <th width="20%">Owner First Name</th>
+                <th width="20%">Owner Last Name</th>
+                <th width="30%">Car Image</th> 
+            </tr>
+
+            {% for car in cars %}
+                <tr>
+                    <td>{{ car.carPlateNumber }}</td>
+                    <td>{{ car.carModel }}</td>
+                    <td>{{ car.ownerFirstName }}</td>
+                    <td>{{ car.ownerLastName }}</td>
+                    <td> 
+                        {% if car.image %}
+                            <img src="{{ car.image.url }}" alt="{{car.carModel}}" width="150" height="150"> 
+                        {% endif %} 
+                    </td> 
+                    
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
