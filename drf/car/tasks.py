@@ -3,8 +3,7 @@ import tempfile
 import glob 
 from celery import shared_task
 from django.core.files import File
-from django.db.models import signals
-from icrawler.builtin import GoogleImageCrawler
+from django.db.models import signals 
 from .models import Car 
 
 @shared_task
@@ -14,18 +13,7 @@ def get_image(carPlateNumber: str):
     
     # retrieve locally
     if images:   
-        Car.objects.filter(carPlateNumber=car.carPlateNumber).update(image=images[len(images)-1])
-    else:   
-        # retrieve using google crawler
-        directory = tempfile.mkdtemp()
-        google_crawler = GoogleImageCrawler(storage={'root_dir': directory})
- 
-        google_crawler.crawl(keyword = car.carModel, filters = dict(size='large', type='photo'), max_num = 1, file_idx_offset = 0)
-        images = os.listdir(directory)
-
-        if images:   
-            with open(os.path.join(directory, images[len(images)-1]) , "rb") as img: 
-                car.image.save(name=f"{car.carModel}.jpg", content=File(img), save=True) 
+        Car.objects.filter(carPlateNumber=car.carPlateNumber).update(image=images[len(images)-1]) 
 
     return None
 
