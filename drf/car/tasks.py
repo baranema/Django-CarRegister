@@ -9,12 +9,10 @@ from .models import Car
 @shared_task
 def get_image(carPlateNumber: str):
     car = Car.objects.get(carPlateNumber=carPlateNumber)  
-    images = glob.glob(f"media/{car.carModel.replace(' ', '_')}.*")
-    print("this -= ", images, " - car" )
-    
+    images = glob.glob(f"media/{car.carModel.replace(' ', '_')}.*") 
+
     # retrieve locally
-    if images:   
-        print("hiii")
+    if images:    
         Car.objects.filter(carPlateNumber=car.carPlateNumber).update(image=images[len(images)-1]) 
 
     return None

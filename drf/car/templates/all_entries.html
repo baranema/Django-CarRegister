@@ -2,29 +2,31 @@
     <head> 
     </head>
     <body>
-        <h1>Cars list</h1> 
-
-        <table>
-            <tr>
-                <th width="14%">Car Plate</th>
+        <h1 style="padding: 1em 0; text-align: center;">Cars list</h1> 
+        <p>
+            <input type="button" onclick="location.href='{% url 'create_car'%}';" value="Create new entry"/>
+        </p>
+        <table style="text-align: center; margin: 0 auto;">
+            <tr style="background-color: #dfdfdf; height: 40px;">
+                <th width="20%">Car Plate</th>
                 <th width="20%">Car Model</th>
                 <th width="20%">Owner First Name</th>
                 <th width="20%">Owner Last Name</th>
-                <th width="30%">Car Image</th> 
+                <th width="20%">Car Image</th> 
             </tr>
 
             {% for car in cars %}
-                <tr>
+                <tr style="background-color: #fafafa;">
                     <td>{{ car.carPlateNumber }}</td>
                     <td>{{ car.carModel }}</td>
                     <td>{{ car.ownerFirstName }}</td>
                     <td>{{ car.ownerLastName }}</td>
                     <td> 
-                        {% if car.image %}
-                            <img src="{{ car.image.url }}" alt="{{car.carModel}}" width="150" height="150"> 
+                        {% if car.image %} 
+                            <img src="{{ car.image.url }}" alt="{{car.carModel}}" style="object-fit: cover; width:230px; height:200px;"> 
                         {% endif %} 
                     </td> 
-                    
+                    <td><a href="{% url 'edit_car' car.id %}">Edit</a></td> 
                 </tr>
             {% endfor %}
         </table>
